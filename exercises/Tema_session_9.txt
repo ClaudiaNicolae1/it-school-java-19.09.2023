@@ -1,18 +1,137 @@
-In each of these 2 exercises, I would like you to use arrays of abstract types and to iterate through them (use instanceof).
-Try to improve the requirements and make the exercise harder, ask yourself questions. (What if.. How does it work?)
-Use the debugger to identify how the polymorphism works.
+public abstract class Monster {
+    protected String name;
+    protected String place;
+    abstract void attack();
+    public Monster(String name, String place){
+        this.name = name;
+        this.place = place;
+    }
+    public Monster(){}
 
-1. We shall design a superclass called Monster and define the method attack() in the superclass.
-    The subclasses shall then provide their actual implementation.
-    In the main program, we declare instances of superclass, substituted with actual subclass; and invoke method defined in the superclass.
 
-2. Shape is an abstract class containing 2 abstract methods: getArea() and getPerimeter(), where its concrete subclasses must provide its implementation.
-    All instance variables shall have protected access, i.e., accessible by its subclasses and classes in the same package.
-    Mark all the overridden methods with annotation @Override.
-    In this exercise, Shape shall be defined as an abstract class, which contains:
+}
 
-    Two protected instance variables color (String) and filled (boolean). The protected variables can be accessed by its subclasses and classes in the same package.
-    Getter and setter for all the instance variables, and toString().
-    Two abstract methods getArea() and getPerimeter() (shown in italics in the class diagram).
-    The subclasses Circle and Rectangle shall override the abstract methods getArea() and getPerimeter() and provide the proper implementation. They also override the toString().
+public class Dragon extends Monster{
 
+    public Dragon(String name, String place) {
+        super(name,place);
+    }
+
+    @Override
+    void attack() {
+        System.out.println("Dragon attacks " + "from " + place);
+    }
+}
+
+public class Frogs extends Monster{
+    @Override
+    void attack() {
+        System.out.println("Frogs don't attack you >:(");
+    }
+}
+
+public abstract class Shape {
+    protected String color;
+    protected boolean filled;
+
+    public Shape(String color, boolean filled) {
+    }
+
+    public void setColor(String color){
+        this.color = color;
+    }
+    public String getColor(){
+        return color;
+    }
+
+    public void setFilled(boolean filled) {
+        this.filled = filled;
+    }
+
+    public boolean getFilled() {
+        return filled;
+    }
+    public abstract float getArea();
+    public abstract float getPerimeter();
+    //ce fac cu toString() :O
+
+}
+
+public class Circle extends Shape{
+    protected float radius;
+    public Circle(float radius, String color, boolean filled){
+        super(color,filled);
+        this.radius = radius;
+    }
+    public void setRadius(float radius){
+        this.radius = radius;
+    }
+
+    @Override
+    public float getArea() {
+        //formula: (pi*r)^2
+        return (float) (Math.PI * radius * radius);
+    }
+
+    @Override
+    public float getPerimeter() {
+        //formula: 2*pi*r
+        return (float) (2 * radius * Math.PI);
+    }
+}
+
+public class Rectangle extends Shape{
+    protected float width;
+    protected float height;
+    public Rectangle(String color, boolean filled, float width, float height) {
+        super(color, filled);
+        this.width = width;
+        this.height = height;
+
+    }
+    public void setHeight(float height){
+        this.height = height;
+    }
+    public float getHeight(){
+        return height;
+    }
+    public void setWidth(float width){
+        this.width = width;
+    }
+    public float getWidth(){
+        return width;
+    }
+
+    @Override
+    public float getArea() {
+        return width*height;
+    }
+
+    @Override
+    public float getPerimeter() {
+        return 2*(width + height);
+    }
+}
+
+
+public class Main {
+    public static void main(String[] args) {
+        Monster dragon = new Dragon("Dragon", "somewhere far away :D");
+        Monster frog = new Frogs();
+        Monster[] monsters = new Monster[]{dragon,frog};
+        for(Monster monster : monsters){
+            if(monster instanceof Dragon){
+                dragon.attack();
+            }else if(monster instanceof Frogs){
+                frog.attack();
+            }
+        }
+        Circle circle = new Circle(3.0f, "blue", false);
+        Rectangle rectangle = new Rectangle("red", true, 4.6f, 6.8f);
+        System.out.println("Area of the circle: " + circle.getArea());
+        System.out.println("Perimeter of the circle: " + circle.getPerimeter());
+        System.out.println("Area of the rectangle: " + rectangle.getArea());
+        System.out.println("Perimeter of the rectangle: " + rectangle.getPerimeter());
+
+    }
+}
