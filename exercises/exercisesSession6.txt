@@ -1,9 +1,244 @@
-// use the 'private' access modifier and rely on getters/setters to retrieve/alter the object's data
-// try to use multiple types of constructors and set the field's data in different manners (constructor or setter)
-// use debugger to identify the changes
+public class Account {
+        private double amount;
 
-1. A class called Employee, which models an employee with an ID, name and salary. The method raiseSalary(percent) increases the salary by the given percentage. Write the Employee class.
-2. A class called InvoiceItem, which models an item of an invoice, with ID, description, quantity and unit price. Write the InvoiceItem class. This class should contain a method called getTotal() based on quantity and price.
-3. A class called Date, which models a calendar date. Write the Date class. This class must contain a field for day, one for month and one for year. This class must contain a method to print the date with this template "day/month/year".
-4. A class called Account, which models a bank account of a customer. The methods credit(amount) and debit(amount) add or subtract the given amount to the balance.
-    The method transferTo(anotherAccount, amount) transfers the given amount from this Account to the given anotherAccount. Write the Account class.
+        public void setAmount(double amount) {
+                this.amount = amount;
+        }
+
+        public double getAmount() {
+                return amount;
+        }
+
+        public String debit(double amount, double balance){
+                System.out.println("Debit: " + amount);
+                return "Balance after debit added: " + (balance + amount);
+        }
+
+
+        public String credit(double amount, double balance){
+                System.out.println("Credit: " + amount);
+                return "After credit extracted fromm balance: " + (balance - amount);
+        }
+        
+
+        @Override
+        public String toString() {
+                return "Account{" +
+                        "amount=" + amount +
+                        '}';
+        }
+}
+
+public class InvoiceItem {
+    private String invoice;
+    private String id;
+    private String description;
+    private int quantity;
+    private int unitPrice;
+
+
+    public InvoiceItem(String invoice, String id, String description, int quantity, int unitPrice) {
+        this.invoice = invoice;
+        this.id = id;
+        this.description = description;
+        this.quantity = quantity;
+        this.unitPrice = unitPrice;
+    }
+
+    public int getTotal(){
+        return quantity * unitPrice;
+    }
+
+    public void setInvoice(String invoice) {
+        this.invoice = invoice;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
+
+    public void setUnitPrice(int unitPrice) {
+        this.unitPrice = unitPrice;
+    }
+
+    public String getInvoice() {
+        return invoice;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public int getUnitPrice() {
+        return unitPrice;
+    }
+
+    @Override
+    public String toString() {
+        return "InvoiceItem{" +
+                "invoice='" + invoice + '\'' +
+                ", id='" + id + '\'' +
+                ", description='" + description + '\'' +
+                ", quantity=" + quantity +
+                ", unitPrice=" + unitPrice +
+                '}';
+    }
+}
+
+public class DateClass {
+        private int day;
+        private int month;
+        private int year;
+
+    public DateClass(int day, int month, int year) {
+        this.day = day;
+        this.month = month;
+        this.year = year;
+    }
+
+    public String enterDate(){
+        return day + "/" + month + "/" + year;
+    }
+
+    public int getDay() {
+        return day;
+    }
+
+    public int getMonth() {
+        return month;
+    }
+
+    public int getYear() {
+        return year;
+    }
+
+    public void setDay(int day) {
+        this.day = day;
+    }
+
+    public void setMonth(int month) {
+        this.month = month;
+    }
+
+    public void setYear(int year) {
+        this.year = year;
+    }
+
+    @Override
+    public String toString() {
+        return "DateClass{" +
+                "day=" + day +
+                ", month=" + month +
+                ", year=" + year +
+                '}';
+    }
+}
+
+public class Employee {
+    private String employeeID;
+    private String employeeName;
+    private float salary;
+
+    private float percentage;
+
+    public Employee(String employeeName, String employeeID, float salary, float percentage) {
+        this.employeeID = employeeID;
+        this.employeeName= employeeName;
+        this.salary = salary;
+        this.percentage = percentage;
+    }
+    public float raiseSalary(){
+        return salary + salary * (percentage / 100);
+    }
+
+    public void setPercentage(float percentage) {
+        this.percentage = percentage;
+    }
+
+    public float getPercentage() {
+        return percentage;
+    }
+
+    public void setEmployeeName(String employeeName) {
+        this.employeeName = employeeName;
+    }
+
+    public String getEmployeeName() {
+        return employeeName;
+    }
+
+    public void setSalary(float salary) {
+        this.salary = salary;
+    }
+
+    public float getSalary() {
+        return salary;
+    }
+
+
+    public void setEmployeeID(String employeeID){
+        this.employeeID = employeeID;
+    }
+    public String getEmployeeID() {
+        return employeeID;
+    }
+
+    @Override
+    public String toString() {
+        return "Employee{" +
+                "employeeID='" + employeeID + '\'' +
+                ", employeeName='" + employeeName + '\'' +
+                ", salary=" + salary +
+                '}';
+    }
+}
+
+
+public class Main {
+    public static void main(String[] args) {
+        Employee employee = new Employee("Stefan", "ID1", 100f, 9.8f);
+        System.out.println(employee);
+        System.out.print("Increased salary: " );
+        System.out.print(employee.raiseSalary());
+        System.out.println();
+
+        InvoiceItem man = new InvoiceItem("No", "ID2", "Some description :D", 10, 30);
+        System.out.println();
+        System.out.println(man);
+        System.out.print("Total price: ");
+        System.out.print(man.getTotal());
+
+        System.out.println();
+        DateClass dateClass = new DateClass(8, 11, 2023);
+        System.out.println();
+        System.out.print("Day/Month/Year: ");
+        System.out.println(dateClass.enterDate());
+        System.out.println(dateClass);
+
+        System.out.println();
+        Account account = new Account();
+        account.setAmount(100);
+        System.out.println(account.credit(100, 200));
+        System.out.println(account.debit(200, 100));
+    }
+}
+
+
+    }
+}
